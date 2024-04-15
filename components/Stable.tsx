@@ -42,6 +42,9 @@ const Stable = () => {
   const [isInfoClosed, setisInfoClosed] = useState(false);
   // check lightbox
   const [isOpen, setIsOpen] = useState(false);
+  //   parameters for stable diffusion
+  const [negativePrompt, setNegativePrompt] = useState("");
+  const [stylePreset, setStylePreset] = useState("");
 
   // change prompt input stlye in case of inappropriate prompt
   const [promptInputClass, setPromptInputClass] =
@@ -162,30 +165,19 @@ const Stable = () => {
   };
 
   const handleSubmit = async () => {
-    // Check if all required fields are filled
-    // if (!name || !email || !image || !prompt) {
-    //   toast.error("All fields are required");
-    //   return;
-    // }
     if (!image) {
       setErrorMessage("Image missing");
       return;
     }
-
-    // Simple email validation
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   toast.error("Invalid email address");
-    //   return;
-    // }
-
-    // Only show the loading toast after passing the validation checks
 
     const formData = new FormData();
     formData.append("userImage", image);
     formData.append("prompt", prompt);
     formData.append("name", name);
     // formData.append("email", email);
+    // parameters for stable diffusion
+    formData.append("negative_prompt", negativePrompt); // Assuming 'negativePrompt' is collected from user input
+    formData.append("style_preset", stylePreset);
     try {
       setLoading(true);
       setPromptInputClass("");
@@ -382,13 +374,46 @@ const Stable = () => {
                   />
                 </>
               ) : (
-                <input
-                  type="text"
-                  className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-3/4 lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
-                  value={prompt}
-                  onChange={handlePromptChange}
-                  placeholder="Write your imagination"
-                />
+                <div className="flex flex-col w-full items-center justify-center gap-5">
+                  <input
+                    type="text"
+                    className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-3/4 lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
+                    value={prompt}
+                    onChange={handlePromptChange}
+                    placeholder="Write your imagination"
+                  />
+                  <input
+                    type="text"
+                    className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-3/4 lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
+                    value={negativePrompt}
+                    onChange={(e) => setNegativePrompt(e.target.value)}
+                    placeholder="Negative Prompt"
+                  />
+                  <select
+                    className="bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 outline-violet-700"
+                    value={stylePreset}
+                    onChange={(e) => setStylePreset(e.target.value)}
+                  >
+                    <option value="">Select a style preset</option>
+                    <option value="none">None</option>
+                    <option value="3d-model">3D Model</option>
+                    <option value="analog-film">Analog Film</option>
+                    <option value="anime">Anime</option>
+                    <option value="cinematic">Cinematic</option>
+                    <option value="comic-book">Comic Book</option>
+                    <option value="digital-art">Digital Art</option>
+                    <option value="enhance">Enhance</option>
+                    <option value="fantasy-art">Fantasy Art</option>
+                    <option value="isometric">Isometric</option>
+                    <option value="line-art">Line Art</option>
+                    <option value="low-poly">Low Poly</option>
+                    <option value="modeling-compound">Modeling Compound</option>
+                    <option value="neon-punk">Neon Punk</option>
+                    <option value="origami">Origami</option>
+                    <option value="photographic">Photographic</option>
+                    <option value="pixel-art">Pixel Art</option>
+                  </select>
+                </div>
               )}
 
               <button
