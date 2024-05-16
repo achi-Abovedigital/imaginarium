@@ -43,7 +43,9 @@ const Stable = () => {
   // check lightbox
   const [isOpen, setIsOpen] = useState(false);
   //   parameters for stable diffusion
-  const [negativePrompt, setNegativePrompt] = useState("");
+  const [negativePrompt, setNegativePrompt] = useState(
+    "Bad quality, unfocused, ugly, Bad proportions, Blurry"
+  );
   const [stylePreset, setStylePreset] = useState("");
 
   // change prompt input stlye in case of inappropriate prompt
@@ -170,9 +172,12 @@ const Stable = () => {
       return;
     }
 
+    const modifiedPrompt = `${prompt} realistic, perfect lightning, clear human face, close up face shot`;
+
     const formData = new FormData();
     formData.append("userImage", image);
-    formData.append("prompt", prompt);
+    formData.append("prompt", modifiedPrompt);
+    console.log(modifiedPrompt);
     formData.append("name", name);
     // formData.append("email", email);
     // parameters for stable diffusion
@@ -183,8 +188,9 @@ const Stable = () => {
       setPromptInputClass("");
       setErrorMessage("");
       const response = await fetch(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/sd",
-        // "http://localhost:8080/sd",
+        // "https://abovedigital-1696444393502.ew.r.appspot.com/sd",
+        "https://abovedigital-1696444393502.ew.r.appspot.com/v1/face-swap",
+        // "http://localhost:8080/v1/face-swap",
         {
           method: "POST",
           body: formData,
@@ -382,13 +388,13 @@ const Stable = () => {
                     onChange={handlePromptChange}
                     placeholder="Write your imagination"
                   />
-                  <input
+                  {/* <input
                     type="text"
                     className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-3/4 lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
                     value={negativePrompt}
                     onChange={(e) => setNegativePrompt(e.target.value)}
                     placeholder="Negative Prompt"
-                  />
+                  /> */}
                   <select
                     className="bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 outline-violet-700"
                     value={stylePreset}
@@ -416,12 +422,12 @@ const Stable = () => {
                 </div>
               )}
 
-              <button
+              {/* <button
                 onClick={handleToggle}
                 className=" border border-violet-900 p-2 rounded-md text-black"
               >
                 {isUsingSpeech ? "or write your imagination" : "Try Microphone"}
-              </button>
+              </button> */}
             </div>
           )}
           {/* upload image */}
