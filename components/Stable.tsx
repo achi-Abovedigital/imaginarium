@@ -46,7 +46,7 @@ const Stable = () => {
   const [negativePrompt, setNegativePrompt] = useState(
     "Bad quality, unfocused, ugly, Bad proportions, Blurry"
   );
-  const [stylePreset, setStylePreset] = useState("");
+  const [stylePreset, setStylePreset] = useState("cinematic");
 
   // change prompt input stlye in case of inappropriate prompt
   const [promptInputClass, setPromptInputClass] =
