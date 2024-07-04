@@ -91,16 +91,16 @@ const page = () => {
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setResultImage(imageUrl);
-        setIsLoading(false);
       } else {
         const errorText = await response.text();
         console.error("Error:", errorText);
-        alert("Failed to generate image. Check console for details.");
-        setIsLoading(false);
+        toast.error("Failed to generate image. Check console for details.");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to send request. Check console for details.");
+      toast.error("Failed to send request. Check console for details.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -114,10 +114,6 @@ const page = () => {
       }
     }
   };
-
-  useEffect(() => {
-    clearCanvas();
-  }, [resultImage]);
 
   return (
     <div className="w-full min-h-screen mx-auto px-4 py-8">
@@ -136,16 +132,23 @@ const page = () => {
           onMouseMove={draw}
           className="border border-gray-300 mb-6"
         />
+        <button
+          type="button"
+          onClick={() => {
+            clearCanvas();
+            setResultImage(null);
+          }}
+          disabled={isLoading}
+          className={`${
+            isLoading ? "bg-violet-400" : "bg-violet-700 hover:bg-violet-900 "
+          } mb-4 text-white w-40 h-10 rounded-md text-lg`}
+        >
+          Clear Canvas
+        </button>
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md flex items justify-center flex-col"
         >
-          <button
-            onClick={clearCanvas}
-            className="bg-violet-700 mb-4 text-white h-10 hover:bg-violet-900 rounded-md text-lg"
-          >
-            Clear Canvas
-          </button>
           <div className="mb-4">
             <input
               type="text"
