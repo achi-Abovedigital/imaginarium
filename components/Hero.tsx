@@ -58,7 +58,7 @@ const Hero = () => {
         toast.error("Please enter password");
       } else {
         const response = await fetch(
-          "https://abovedigital-1696444393502.ew.r.appspot.com/verify-passcode",
+          `${process.env.NEXT_PUBLIC_API_URL}/verify-passcode`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -191,7 +191,7 @@ const Hero = () => {
       setPromptInputClass("");
       setErrorMessage("");
       const response = await fetch(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/discord-ai",
+        `${process.env.NEXT_PUBLIC_API_URL}/discord-ai`,
         {
           method: "POST",
           body: formData,
@@ -231,7 +231,7 @@ const Hero = () => {
     try {
       setEmailLoading(true);
       const emailResponse = await axios.post(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/v1/mail",
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/mail`,
         {
           toEmail: email,
           subject: "AI Imaginarium",

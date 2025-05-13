@@ -15,7 +15,7 @@ export async function sendAudioToServer(audioBlob, onTranscription) {
 
   try {
     const response = await fetch(
-      "https://abovedigital-1696444393502.ew.r.appspot.com/transcribe-audio",
+      `${process.env.NEXT_PUBLIC_API_URL}/transcribe-audio`,
       {
         method: "POST",
         body: formData,
@@ -52,7 +52,7 @@ export async function fetchDataFromFirestore() {
 
 export async function fetchPaginatedImages(page, limit = 10) {
   const response = await fetch(
-    `https://abovedigital-1696444393502.ew.r.appspot.com/paginated-images?page=${page}&limit=${limit}`
+    `${process.env.NEXT_PUBLIC_API_URL}/paginated-images?page=${page}&limit=${limit}`
   );
   const data = await response.json();
   return data;

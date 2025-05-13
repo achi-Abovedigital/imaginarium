@@ -46,7 +46,7 @@ const ImagesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://abovedigital-1696444393502.ew.r.appspot.com/paginated-images?page=${currentPage}&limit=${limit}`
+        `${process.env.NEXT_PUBLIC_API_URL}/paginated-images?page=${currentPage}&limit=${limit}`
       );
       if (!response.ok) {
         throw new Error("Server error");

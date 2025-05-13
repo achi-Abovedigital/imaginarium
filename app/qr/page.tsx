@@ -72,9 +72,7 @@ const Page = () => {
   // fetch qr code
   const fetchQrCode = async () => {
     try {
-      const response = await fetch(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/qr"
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/qr`);
       if (!response.ok) throw new Error("Error fetching QR code");
       const qrCodeHtml = await response.text();
       setQrCode(qrCodeHtml);

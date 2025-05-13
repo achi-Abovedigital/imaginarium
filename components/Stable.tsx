@@ -24,9 +24,9 @@ const Stable = () => {
   const [resultImage, setResultImage] = useState<string | null>("");
   // easy authentication
   const [passcode, setPasscode] = useState("");
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(true);
   // steps for show previous or next jsx element
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   // input and microphone togle state
   const [isUsingSpeech, setIsUsingSpeech] = useState(false);
   // show audio text
@@ -62,8 +62,9 @@ const Stable = () => {
       if (!passcode) {
         toast.error("Please enter password");
       } else {
+        console.log(process.env.NEXT_PUBLIC_API_URL);
         const response = await fetch(
-          "https://abovedigital-1696444393502.ew.r.appspot.com/verify-passcode",
+          `${process.env.NEXT_PUBLIC_API_URL}/verify-passcode`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -189,8 +190,7 @@ const Stable = () => {
       setErrorMessage("");
       const response = await fetch(
         // "https://abovedigital-1696444393502.ew.r.appspot.com/sd",
-        "https://abovedigital-1696444393502.ew.r.appspot.com/v1/face-swap",
-        // "http://localhost:8080/v1/face-swap",
+        `${process.env.NEXT_PUBLIC_API_URL}/sd`,
         {
           method: "POST",
           body: formData,
@@ -230,7 +230,7 @@ const Stable = () => {
     try {
       setEmailLoading(true);
       const emailResponse = await axios.post(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/v1/mail",
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/mail`,
         {
           toEmail: email,
           subject: "AI Imaginarium",
@@ -380,10 +380,10 @@ const Stable = () => {
                   />
                 </>
               ) : (
-                <div className="flex flex-col w-full items-center justify-center gap-5">
+                <div className="flex flex-col w-1/2 items-center justify-center gap-5">
                   <input
                     type="text"
-                    className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-3/4 lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
+                    className={`bg-gray-50 border fadeIn border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block xl:w-full lg:w-full md:w-full sm:full xs:w-[150%] p-2.5 outline-violet-700 ${promptInputClass}`}
                     value={prompt}
                     onChange={handlePromptChange}
                     placeholder="Write your imagination"

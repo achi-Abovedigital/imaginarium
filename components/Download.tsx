@@ -5,9 +5,9 @@ type DownloadButtonProps = {
 const DownloadButton: React.FC<DownloadButtonProps> = ({ imageUrl }) => {
   const handleDownload = (imageUrl: string) => {
     fetch(
-      `https://abovedigital-1696444393502.ew.r.appspot.com/downloadImage?imageUrl=${encodeURIComponent(
-        imageUrl
-      )}`
+      `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/downloadImage?imageUrl=${encodeURIComponent(imageUrl)}`
     )
       .then((response) => response.blob())
       .then((blob) => {

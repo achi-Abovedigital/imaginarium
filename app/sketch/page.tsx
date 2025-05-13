@@ -72,15 +72,15 @@ const page = () => {
 
     const formData = new FormData();
     formData.append("image", blob, "sketch.png");
-    formData.append("prompt", prompt);
+    // formData.append("prompt", prompt);
     formData.append("controlStrength", controlStrength.toString());
     formData.append("outputFormat", outputFormat);
 
     try {
       setIsLoading(true);
       const response = await fetch(
-        "https://abovedigital-1696444393502.ew.r.appspot.com/v1/sketch/sketch",
-        // "http://localhost:8080/v1/sketch/sketch",
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/sketch/sketch-gpt`,
+        // "http://localhost:8080/v1/sketch/sketch-gpt",
         {
           method: "POST",
           body: formData,
@@ -149,7 +149,7 @@ const page = () => {
           onSubmit={handleSubmit}
           className="w-full max-w-md flex items justify-center flex-col"
         >
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <input
               type="text"
               value={prompt}
@@ -158,7 +158,7 @@ const page = () => {
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </div> */}
           {/* <div className="mb-4">
             <input
               type="number"
