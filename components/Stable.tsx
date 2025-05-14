@@ -452,6 +452,7 @@ const Stable = () => {
                     <input
                       type="file"
                       accept="image/*"
+                      capture="environment"
                       onChange={handleImageChange}
                       className="hidden"
                       disabled={loading}
@@ -556,6 +557,7 @@ const Stable = () => {
                   <input
                     type="file"
                     accept="image/*"
+                    capture="environment"
                     disabled={!isChecked}
                     onChange={handleImageChange}
                     className="hidden"
