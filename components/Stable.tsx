@@ -194,6 +194,7 @@ const Stable = () => {
         {
           method: "POST",
           body: formData,
+          next: { revalidate: 0 },
         }
       );
 
